@@ -1,0 +1,42 @@
+header {
+  height: 100px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: rgb(90, 133, 199);
+  nav {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100px;
+    ul {
+      margin: 0;
+      padding: 0;
+      background-color: transparent;
+      padding: 20px;
+      max-width: 500px;
+      max-height: 20px;
+      min-height: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      li {
+        list-style: none;
+        a {
+          text-decoration: none;
+          color: rgb(235, 235, 235);
+          font-family: "Montserrat", sans-serif;
+          font-weight: 700;
+          transition: 0.09s;
+        }
+        a:hover {
+          border-bottom: 3px solid rgb(235, 235, 235);
+          margin-top: 3px;
+        }
+      }
+    }
+  }
+}
