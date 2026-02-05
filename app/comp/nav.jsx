@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Nav() {
+  const [open, setOpen] = useState(false);
+
   useEffect(() => {
     const nav = document.querySelector(".nav");
     requestAnimationFrame(() => nav.classList.add("navShow"));
@@ -16,17 +18,33 @@ export default function Nav() {
             <img src="/logo.png" alt="Zai Tech" />
           </div>
 
-          <ul className="navLinks">
+          {/* BOTÓN HAMBURGUESA */}
+          <button
+            className={`menuBtn ${open ? "open" : ""}`}
+            onClick={() => setOpen(!open)}
+            aria-label="Abrir menú"
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+
+          <ul className={`navLinks ${open ? "open" : ""}`}>
             <li>
-              <a href="/">Inicio</a>
+              <a href="/" onClick={() => setOpen(false)}>
+                Inicio
+              </a>
             </li>
             <li>
-              <a href="/equipo">Equipo</a>
+              <a href="/equipo" onClick={() => setOpen(false)}>
+                Equipo
+              </a>
             </li>
             <li>
               <a
                 href="https://www.instagram.com/zai.tech.webs/"
                 className="ctaNav"
+                onClick={() => setOpen(false)}
               >
                 Contactanos
               </a>
@@ -36,7 +54,6 @@ export default function Nav() {
       </header>
 
       <style jsx>{`
-        /* NAV */
         .nav {
           position: fixed;
           top: 0;
@@ -64,17 +81,11 @@ export default function Nav() {
 
         /* LOGO */
         .logoWrap img {
-          width: 120px; /* 🔥 BIEN GRANDE */
-          height: auto;
+          width: 120px;
           filter: drop-shadow(0 0 26px rgba(90, 125, 255, 0.75));
-          transition: transform 0.35s ease;
         }
 
-        .logoWrap img:hover {
-          transform: scale(1.05);
-        }
-
-        /* LINKS */
+        /* LINKS DESKTOP */
         .navLinks {
           list-style: none;
           display: flex;
@@ -85,8 +96,8 @@ export default function Nav() {
         }
 
         .navLinks a {
-          text-decoration: none;
           color: #dbe2ff;
+          text-decoration: none;
           font-size: 0.95rem;
           position: relative;
         }
@@ -96,7 +107,7 @@ export default function Nav() {
           position: absolute;
           left: 0;
           bottom: -6px;
-          width: 0%;
+          width: 0;
           height: 2px;
           background: linear-gradient(90deg, #5a7dff, #8aa2ff);
           transition: width 0.3s ease;
@@ -106,7 +117,6 @@ export default function Nav() {
           width: 100%;
         }
 
-        /* CTA */
         .ctaNav {
           padding: 12px 26px;
           border-radius: 32px;
@@ -120,42 +130,61 @@ export default function Nav() {
           display: none;
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 900px) {
-          .logoWrap img {
-            width: 95px;
+        /* BOTÓN HAMBURGUESA */
+        .menuBtn {
+          display: none;
+          flex-direction: column;
+          gap: 6px;
+          background: none;
+          border: none;
+          cursor: pointer;
+        }
+
+        .menuBtn span {
+          width: 26px;
+          height: 2px;
+          background: #dbe2ff;
+          transition: 0.3s;
+        }
+
+        .menuBtn.open span:nth-child(1) {
+          transform: translateY(8px) rotate(45deg);
+        }
+
+        .menuBtn.open span:nth-child(2) {
+          opacity: 0;
+        }
+
+        .menuBtn.open span:nth-child(3) {
+          transform: translateY(-8px) rotate(-45deg);
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+          .menuBtn {
+            display: flex;
           }
 
           .navLinks {
-            gap: 24px;
-          }
-        }
-
-        @media (max-width: 600px) {
-          .navInner {
-            padding: 16px 20px;
-          }
-
-          .logoWrap img {
-            width: 78px;
-          }
-
-          .navLinks a {
-            font-size: 0.85rem;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: rgba(5, 8, 20, 0.95);
+            backdrop-filter: blur(18px);
+            flex-direction: column;
+            gap: 28px;
+            padding: 32px 0;
+            transform: translateY(-20px);
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.4s ease;
           }
 
-          .ctaNav {
-            padding: 10px 20px;
-          }
-        }
-
-        @media (max-width: 420px) {
-          .logoWrap img {
-            width: 68px;
-          }
-
-          .navLinks {
-            gap: 14px;
+          .navLinks.open {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
           }
         }
       `}</style>
